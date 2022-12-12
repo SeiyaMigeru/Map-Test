@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Project Maria</title>
+
+        <!-- Leaflet CSS-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+        crossorigin=""/>
+
+        <!--Leaflet JavaScript-->
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+        crossorigin=""></script>
+
+        <!-- CSS -->
+        <style>
+            #map { height: 800px; width: 80% }
+        </style>
+
+    </head>
+
+
+    <body>
+        <h1>Project Maria Beta</h1>
+        <div id="map"></div>
+
+        <script>
+            // All OpenStreetMap Testing
+
+            //Map Variable
+            var map = L.map('map', {
+            center: [14.140285, 121.212066],
+            zoom: 14,
+            layers: [osm, Rescuees]
+            });
+
+            //Marker Variable
+            var Rescuee1 = L.marker([14.150273, 121.212752]);
+
+            var Rescuees = L.layerGroup([Rescuee1]);
+
+            //Circle Variable
+            var circle = L.circle([14.150273, 121.212752], {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: 500
+            }).addTo(map);
+
+            //Tile Layer
+            var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            });
+
+            var streets = L.tileLayer(mapboxUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution});
+
+            var baseMaps = {
+            "OpenStreetMap": osm,
+            "Mapbox Streets": streets
+            };
+
+            var overlayMaps = {
+            "Resucuees": Rescuees
+            };
+
+            var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+            var baseMaps = {
+    "<span style='color: gray'>Grayscale</span>": grayscale,
+    "Streets": streets
+};
+
+var crownHill = L.marker([39.75, -105.09]).bindPopup('This is Crown Hill Park.'),
+    rubyHill = L.marker([39.68, -105.00]).bindPopup('This is Ruby Hill Park.');
+    
+var parks = L.layerGroup([crownHill, rubyHill]);
+var satellite = L.tileLayer(mapboxUrl, {id: 'MapID', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution});
+
+layerControl.addBaseLayer(satellite, "Satellite");
+layerControl.addOverlay(parks, "Parks");
+
+
+        </script>
+
+    </body>
+
+
+</html>
